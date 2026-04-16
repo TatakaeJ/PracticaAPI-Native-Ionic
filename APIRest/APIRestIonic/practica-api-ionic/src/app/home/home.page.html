@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      API Standalone
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button expand="full" (click)="obtenerUsuario()">
+    Cargar usuarios
+  </ion-button>
+
+  <div *ngIf="cargando" style="text-align: center;">
+    <ion-spinner></ion-spinner>
+    <p>Cargando datos...</p>
+  </div>
+
+  <div *ngIf="error" style="color: red;">
+    Error: {{ error }}
+  </div>
+  
+  <ion-input
+    placeholder="Buscar usuario"
+    [(ngModel)]="busqueda"
+    (ionInput)="filtrarUsuarios()"
+  ></ion-input>
+
+  <ion-list *ngIf="!cargando && !error">
+    <ion-item *ngFor="let usuario of usuariosFiltrados">
+      <ion-label>
+        {{ usuario.name }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="!cargando && !error">
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{ usuario.name }}</h2>
+        <p>Email: {{ usuario.email }}</p>
+        <p>Phone: {{ usuario.phone }}</p>
+        <p>City: {{ usuario.address.city }}</p>
+        <p>Company: {{ usuario.company.name }}</p>
+      </ion-label>
+      <ion-button size="small" (click)="actualizarUsuario(usuario.id)">
+        Actualizar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
